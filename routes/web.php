@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CatController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +21,10 @@ Route::get('/', function () {
     return view('pages.index');
 });
 
+Route::get('/available-cats', [CatController::class, 'list']);
+Route::get('/cats/{id}', [CatController::class, 'profile']);
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -25,4 +33,5 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource('/admin/product', ProductController::class, ['update' => 'PUT']);
 });
